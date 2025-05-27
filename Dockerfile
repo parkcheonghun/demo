@@ -8,4 +8,4 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY build/libs/demo-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
 # 포트 노출
-EXPOSE 8080
+EXPOSE 8180
