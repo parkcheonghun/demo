@@ -11,4 +11,4 @@ COPY build/libs/demo-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 RUN sed -i 's/port="8080"/port="8180"/' /usr/local/tomcat/conf/server.xml
 
 # 포트 노출 (컨테이너 포트)
-EXPOSE 8180
+EXPOSE 8280
