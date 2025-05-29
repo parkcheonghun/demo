@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -12,11 +14,15 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
           name: http
@@ -29,3 +35,19 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "prod"
+        - name: JAVA_OPTS
+          value: "-Xmx{{ .Values.javaOpts.heapSize.max }} -Xms{{ .Values.javaOpts.heapSize.min }}"
+        - name: SPRING_CONFIG_MAP
+          value: "{{ .Chart.Name }}-config"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Chart.Name }}-config
+          items:
+          - key: application-name
+            path: application-name.properties
+          - key: environment
+            path: environment.properties

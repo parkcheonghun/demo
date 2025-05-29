@@ -4,7 +4,7 @@ replicaCount: 2
 image:
   repository: parkcheonghun/img-demo-app
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
@@ -45,3 +45,11 @@ ingress:
 config:
   application-name: demo-app
   environment: prod
+
+imagePullSecrets:
+  - name: regcred
+
+javaOpts:
+  heapSize:
+    min: "256m"
+    max: "512m"
