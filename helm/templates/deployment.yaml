@@ -18,4 +18,14 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-        - containerPort: 80
+        - containerPort: 8081
+          name: http
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        livenessProbe:
+          {{- toYaml .Values.livenessProbe | nindent 12 }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 12 }}
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
