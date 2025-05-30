@@ -40,22 +40,6 @@ spec:
           value: "-Xmx{{ .Values.javaOpts.heapSize.max }} -Xms{{ .Values.javaOpts.heapSize.min }} -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError"
         - name: SERVER_PORT
           value: "8081"
-        - name: MANAGEMENT_SERVER_PORT
-          value: "8081"
-        - name: MANAGEMENT_ENDPOINTS_WEB_BASE_PATH
-          value: "/actuator"
-        - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
-          value: "health,info,metrics"
-        - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
-          value: "true"
-        - name: MANAGEMENT_ENDPOINT_HEALTH_GROUP_LIVENESS_INCLUDE
-          value: "livenessState"
-        - name: MANAGEMENT_ENDPOINT_HEALTH_GROUP_READINESS_INCLUDE
-          value: "readinessState"
-        - name: MANAGEMENT_HEALTH_LIVENESSSTATE_ENABLED
-          value: "true"
-        - name: MANAGEMENT_HEALTH_READINESSSTATE_ENABLED
-          value: "true"
         - name: SPRING_CONFIG_MAP
           value: "{{ .Chart.Name }}-config"
         volumeMounts:
