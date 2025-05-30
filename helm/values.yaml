@@ -7,6 +7,7 @@ image:
   pullPolicy: IfNotPresent
 
 service:
+  name: demo-app
   type: ClusterIP
   port: 8081
 
