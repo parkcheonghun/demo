@@ -46,12 +46,12 @@ ingress:
         - path: /
           pathType: Prefix
           service:
-            name: {{ .Chart.Name }}
+            name: demo-app
             port: 8081
         - path: /actuator/health
           pathType: Prefix
           service:
-            name: {{ .Chart.Name }}
+            name: demo-app
             port: 8081
 
 config:
