@@ -23,8 +23,7 @@ spec:
             backend:
               service:
                 name: {{ .Values.service.name }}
-                port: 
-                  number: {{ .Values.service.port }}
+                port: {{ .Values.service.port }}
           {{- end }}
     {{- end }}
 {{- end }}
