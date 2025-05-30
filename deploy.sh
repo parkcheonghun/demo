@@ -11,10 +11,22 @@ echo "Build with Gradle"
 echo "Build Docker Image"
 docker build -t img-demo-app .
 
-echo "Stop and Remove Old Container"
-docker stop cn-demo-app && docker rm cn-demo-app
+echo "Docker Image Tag"
+docker tag img-demo-app parkcheonghun/img-demo-app:latest
 
-echo "Run New Container"
-docker run -d -p 8081:8081 --name cn-demo-app img-demo-app
+echo "Push Docker Image"
+docker push parkcheonghun/img-demo-app:latest
+
+echo "Docker login"
+docker login
+
+echo "Docker Image upload"
+docker push parkcheonghun/img-demo-app:latest
+ 
+#echo "Stop and Remove Old Container"
+#docker stop cn-demo-app && docker rm cn-demo-app
+
+#echo "Run New Container"
+#docker run -d -p 8081:8081 --name cn-demo-app img-demo-app
 
 echo "Deployment Complete: http://localhost:8081"
