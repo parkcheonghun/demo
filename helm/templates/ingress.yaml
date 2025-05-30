@@ -22,9 +22,9 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ .Values.service.name }}
+                name: demo-app
                 port:
-                  number: {{ .Values.service.port }}
+                  number: 8081
           {{- end }}
     {{- end }}
 {{- end }}

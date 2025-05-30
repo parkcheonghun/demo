@@ -48,9 +48,6 @@ ingress:
           pathType: Prefix
         - path: /actuator/health
           pathType: Prefix
-          service:
-            name: demo-app
-            port: 8081
 
 config:
   application-name: demo-app
