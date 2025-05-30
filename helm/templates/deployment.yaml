@@ -24,8 +24,9 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8081
-          name: http
+        - name: http
+          containerPort: 8081
+          protocol: TCP
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
         livenessProbe:
@@ -36,7 +37,9 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: "prod"
         - name: JAVA_OPTS
-          value: "-Xmx{{ .Values.javaOpts.heapSize.max }} -Xms{{ .Values.javaOpts.heapSize.min }}"
+          value: "-Xmx{{ .Values.javaOpts.heapSize.max }} -Xms{{ .Values.javaOpts.heapSize.min }} -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError"
+        - name: SERVER_PORT
+          value: "8081"
         - name: SPRING_CONFIG_MAP
           value: "{{ .Chart.Name }}-config"
         volumeMounts:
