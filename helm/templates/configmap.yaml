@@ -6,6 +6,8 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
 data:
-  {{- range $key, $value := .Values.config }}
-  {{ $key }}: {{ $value | quote }}
-  {{- end }}
+  application-name: "demo-app"
+  environment: "prod"
+  #{{- range $key, $value := .Values.config }}
+  #{{ $key }}: {{ $value | quote }}
+  #{{- end }}

@@ -52,8 +52,8 @@ spec:
       - name: config-volume
         configMap:
           name: {{ .Chart.Name }}-config
-          items:
-          - key: application
-            path: application.yaml
+          #items:
+          #- key: application
+          #  path: application.yaml
           #- key: environment
           #  path: environment.properties
