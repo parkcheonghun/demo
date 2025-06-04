@@ -44,7 +44,9 @@ spec:
           value: "{{ .Chart.Name }}-config"
         volumeMounts:
         - name: config-volume
-          mountPath: /config
+          #mountPath: /config
+          mountPath: /resources/application.yaml
+          subPath: application-name.yaml
       volumes:
       - name: config-volume
         configMap:
