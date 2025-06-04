@@ -6,14 +6,6 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
 data:
-  application.yaml: |-
-    server:
-      port: 8081
-    management:
-      endpoints:
-        web:
-          exposure:
-            include: health, info
-      endpoint:
-        health:
-          show-details: always
+  {{- range $key, $value := .Values.config }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}

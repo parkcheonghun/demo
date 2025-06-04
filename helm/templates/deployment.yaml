@@ -46,13 +46,14 @@ spec:
         - name: config-volume
           #mountPath: /config
           mountPath: /resources/application.yaml
-          subPath: application-name.yaml
+          #mountPath: /resources/application.yaml
+          subPath: application.yaml
       volumes:
       - name: config-volume
         configMap:
           name: {{ .Chart.Name }}-config
           items:
-          - key: application-name
-            path: application-name.properties
-          - key: environment
-            path: environment.properties
+          - key: application
+            path: application.yaml
+          #- key: environment
+          #  path: environment.properties
