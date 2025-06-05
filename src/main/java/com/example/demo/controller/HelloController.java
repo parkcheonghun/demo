@@ -9,4 +9,14 @@ public class HelloController {
     public String hello() {
         return "Hello, Spring Boot, here is docker container execute !";
     }
+
+    @GetMapping("/actuator/health/liveness")
+    public String liveness() {
+        return "Pods liveness";
+    }
+
+    @GetMapping("/actuator/health/readiness")
+    public String readiness() {
+        return "Pods readiness";
+    }
 }

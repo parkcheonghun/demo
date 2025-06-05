@@ -1,13 +1,16 @@
-# helm/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Chart.Name }}-config
+  name: demo-app
   labels:
     app: {{ .Chart.Name }}
 data:
-  application-name: "demo-app"
-  environment: "prod"
-  #{{- range $key, $value := .Values.config }}
-  #{{ $key }}: {{ $value | quote }}
-  #{{- end }}
+  application.yaml: |
+    spring:
+      profiles:
+        active: prod
+    server:
+      port: 8081
+    application:
+      name: demo-app
+    environment: prod

@@ -1,4 +1,3 @@
-# helm/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +14,7 @@ spec:
       labels:
         app: {{ .Chart.Name }}
       annotations:
-        checksum/resources: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       imagePullSecrets:
       - name: regcred
@@ -28,11 +27,26 @@ spec:
           containerPort: 8081
           protocol: TCP
         resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
         livenessProbe:
-          {{- toYaml .Values.livenessProbe | nindent 12 }}
+          httpGet:
+            path: /actuator/health/liveness
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
         readinessProbe:
-          {{- toYaml .Values.readinessProbe | nindent 12 }}
+          httpGet:
+            path: /actuator/health/readiness
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "prod"
@@ -41,19 +55,12 @@ spec:
         - name: SERVER_PORT
           value: "8081"
         - name: SPRING_CONFIG_MAP
-          value: "{{ .Chart.Name }}-config"
+          value: "demo-config"
         volumeMounts:
         - name: config-volume
-          #mountPath: /config
           mountPath: /resources/application.yaml
-          #mountPath: /resources/application.yaml
           subPath: application.yaml
       volumes:
       - name: config-volume
         configMap:
-          name: {{ .Chart.Name }}-config
-          #items:
-          #- key: application
-          #  path: application.yaml
-          #- key: environment
-          #  path: environment.properties
+          name: demo-config
