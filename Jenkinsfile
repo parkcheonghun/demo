@@ -4,7 +4,6 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('my-docker-hub') // Jenkins Credentials ID
         DOCKER_USERNAME = 'parkcheonghun' // Docker Hub 사용자 이름
-        DOCKER_PASSWORD = 'dckr_pat_GbrhFjgBRB-W-NXK_fORXgLTelU' // Docker Hub 비밀번호 (Jenkins Credentials에서 관리)
         DOCKER_IMAGE_NAME = 'parkcheonghun/demo' // Docker Hub 사용자 이름과 프로젝트 이름
         DOKER_IMAGE_TAG = "latest"
         BUILD_NUMBER = "${env.BUILD_NUMBER}" // Jenkins 빌드 번호
@@ -36,7 +35,7 @@ pipeline {
                 echo 'Building Docker image...'
                 sh 'docker build -t demo-app:latest .'
                 sh 'docker tag demo-app parkcheonghun/demo-app:latest'
-                sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}" // my-registry는 선택 사항, Docker Hub 기본 사용 시 생략 가능
+                //sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}" // my-registry는 선택 사항, Docker Hub 기본 사용 시 생략 가능
                 sh "docker push ${DOCKER_IMAGE_NAME}:${DOKER_IMAGE_TAG}"
                 sh "docker push ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                 //sh 'docker push parkcheonghun/demo-app:latest'
