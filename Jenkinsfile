@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('my-docker-hub') // Jenkins Credentials ID
-        DOCKER_USERNAME = 'parkcheonghun' // Docker Hub 사용자 이름
-        DOCKER_IMAGE_NAME = 'parkcheonghun/demo' // Docker Hub 사용자 이름과 프로젝트 이름
-        DOKER_IMAGE_TAG = "latest"
-        BUILD_NUMBER = "${env.BUILD_NUMBER}" // Jenkins 빌드 번호
+        //DOCKER_HUB_CREDENTIALS = credentials('my-docker-hub') // Jenkins Credentials ID
+        //DOCKER_USERNAME = 'parkcheonghun' // Docker Hub 사용자 이름
+        //DOCKER_IMAGE_NAME = 'parkcheonghun/demo' // Docker Hub 사용자 이름과 프로젝트 이름
+        //DOKER_IMAGE_TAG = "latest"
+        //BUILD_NUMBER = "${env.BUILD_NUMBER}" // Jenkins 빌드 번호
     }
 
     stages {
