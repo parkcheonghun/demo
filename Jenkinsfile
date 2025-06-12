@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_HUB_CREDENTIALS = credentials('my-docker-hub') // Jenkins Credentials ID
-        IMAGE_NAME = 'parkcheonghun/demo' // Docker Hub 사용자 이름과 프로젝트 이름
-        IMAGE_TAG = "latest"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -31,7 +25,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t demo-app:latest .'
+                sh 'docker build -t demo-app .'
                 sh 'docker tag demo-app parkcheonghun/demo-app:latest'
                 sh 'docker push parkcheonghun/demo-app:latest'
                 // sh 'kubectl apply -f helm/deployment.yaml'
