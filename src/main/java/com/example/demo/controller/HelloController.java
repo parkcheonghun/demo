@@ -19,4 +19,14 @@ public class HelloController {
     public String readiness() {
         return "Pods readiness";
     }
+
+    @GetMapping("/greeting")
+    public String greeting() {
+        return "Welcome to our Spring Boot application!";
+    }
+
+    @GetMapping("/newEndpoint")
+    public String newEndpoint() {
+        return "This is a new endpoint";
+    }
 }
