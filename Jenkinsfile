@@ -36,11 +36,9 @@ pipeline {
                 echo 'Building Docker image...'
                 sh 'docker build -t demo-app:latest .'
                 sh 'docker tag demo-app parkcheonghun/demo-app:latest'
-                withCredentials([usernamePassword(credentialsId: 'my-docker-hub', usernameVariable: 'parkcheonghun', passwordVariable: 'dckr_pat_GbrhFjgBRB-W-NXK_fORXgLTelU')]) {
-                    sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}" // my-registry는 선택 사항, Docker Hub 기본 사용 시 생략 가능
-                    sh "docker push ${DOCKER_IMAGE_NAME}:${DOKER_IMAGE_TAG}"
-                    sh "docker push ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-                }
+                sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}" // my-registry는 선택 사항, Docker Hub 기본 사용 시 생략 가능
+                sh "docker push ${DOCKER_IMAGE_NAME}:${DOKER_IMAGE_TAG}"
+                sh "docker push ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                 //sh 'docker push parkcheonghun/demo-app:latest'
                 // sh 'kubectl apply -f helm/deployment.yaml'
                 //script {
