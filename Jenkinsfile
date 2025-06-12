@@ -30,7 +30,17 @@ pipeline {
                 echo 'Building Docker image...'
                 sh 'docker build -t demo-app .'
                 sh 'docker tag demo-app parkcheonghun/demo-app:latest'
-                sh 'docker push parkcheonghun/demo-app:latest'
+                // Jenkins Credentials에 저장된 Docker Hub 인증 정보 사용
+                // 'docker-hub-credentials'는 위에서 설정한 Credentials ID
+                withCredentials([usernamePassword(credentialsId: 'my-docker-hub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    // Docker Hub에 로그인
+                    sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
+                    // Docker 이미지 푸시
+                    sh 'docker push parkcheonghun/demo-app:latest'
+                    // 로그인 정보가 불필요하게 남아있지 않도록 로그아웃 (선택 사항이지만 권장)
+                    sh 'docker logout'
+                }
+                //sh 'docker push parkcheonghun/demo-app:latest'
                 // sh 'kubectl apply -f helm/deployment.yaml'
                 //script {
                 //    def app = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
