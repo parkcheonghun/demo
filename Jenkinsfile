@@ -56,7 +56,10 @@ pipeline {
             }
         }
         */
-        post {
+        
+    }
+
+    post {
             always {
                 echo 'Cleaning up workspace...'
                 cleanWs() // Jenkins 작업 공간 정리
@@ -68,5 +71,4 @@ pipeline {
                 echo 'Build or deployment failed!'
             }
         }
-    }
 }
