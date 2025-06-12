@@ -13,6 +13,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building with Gradle...'
+                // gradlew 파일에 실행 권한 추가
+                sh 'chmod +x gradlew'
                 sh './gradlew clean build' // Gradle을 사용하여 빌드
             }
         }
