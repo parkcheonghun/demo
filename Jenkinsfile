@@ -32,6 +32,7 @@ pipeline {
                 sh 'docker tag demo-app parkcheonghun/demo-app:latest'
                 // Jenkins Credentials에 저장된 Docker Hub 인증 정보 사용
                 // 'docker-hub-credentials'는 위에서 설정한 Credentials ID
+                // docker hub 개인 access token을 만들때 Read, Write 권한을 부여해야 합니다.
                 withCredentials([usernamePassword(credentialsId: 'my-docker-hub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     // Docker Hub에 로그인
                     sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
