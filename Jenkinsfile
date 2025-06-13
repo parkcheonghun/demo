@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 sh 'docker build -t demo-app .'
-                sh 'docker tag demo-app parkcheonghun/demo-app:latest'
+                sh 'docker tag demo-app parkcheonghun/demo-app:${BUILD_NUMBER}'
                 // Jenkins Credentials에 저장된 Docker Hub 인증 정보 사용
                 // 'docker-hub-credentials'는 위에서 설정한 Credentials ID
                 // docker hub 개인 access token을 만들때 Read, Write 권한을 부여해야 합니다.
@@ -37,7 +37,7 @@ pipeline {
                     // Docker Hub에 로그인
                     sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
                     // Docker 이미지 푸시
-                    sh 'docker push parkcheonghun/demo-app:latest'
+                    sh 'docker push parkcheonghun/demo-app:${BUILD_NUMBER}'
                     // 로그인 정보가 불필요하게 남아있지 않도록 로그아웃 (선택 사항이지만 권장)
                     sh 'docker logout'
                 }
@@ -60,16 +60,13 @@ pipeline {
                 // sh "kubectl set image deployment/your-app your-container=${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-        /*
         stage('Cleanup') {
             steps {
                 echo 'Cleaning up...'
-                sh 'docker rmi my-app:latest' // 빌드된 Docker 이미지 제거
+                sh 'docker rmi demo-app:${BUILD_NUMBER}' // 빌드된 Docker 이미지 제거
                 // sh 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG}' // Docker Hub에서 푸시한 이미지 제거
             }
-        }
-        */
-        
+        }        
     }
 
     post {
