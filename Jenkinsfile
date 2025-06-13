@@ -30,7 +30,7 @@ pipeline {
                 echo 'Building Docker image...'
                 // docker 빌드 시 태그가 없으면 default로 'latest'가 태그 사용됩니다.
                 sh 'docker build -t demo-app:${BUILD_NUMBER} .'
-                // sh 'docker tag demo-app:${BUILD_NUMBER} parkcheonghun/demo-app:${BUILD_NUMBER}'
+                sh 'docker tag demo-app:${BUILD_NUMBER} parkcheonghun/demo-app:${BUILD_NUMBER}'
                 // Jenkins Credentials에 저장된 Docker Hub 인증 정보 사용
                 // 'docker-hub-credentials'는 위에서 설정한 Credentials ID
                 // docker hub 개인 access token을 만들때 Read, Write 권한을 부여해야 합니다.
@@ -65,6 +65,7 @@ pipeline {
             steps {
                 echo 'Cleaning up...'
                 sh 'docker rmi demo-app:${BUILD_NUMBER}' // 빌드된 Docker 이미지 제거
+                sh 'docker rmi parkcheonghun/demo-app:${BUILD_NUMBER}' // 빌드된 Docker 이미지 제거
                 // sh 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG}' // Docker Hub에서 푸시한 이미지 제거
             }
         }        
