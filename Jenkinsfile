@@ -8,7 +8,7 @@ pipeline {
         NEW_IMAGE_TAG = "${BUILD_NUMBER}" // 또는 sh 'git rev-parse --short HEAD' 등으로 Git SHA 사용
         GITOPS_REPO_URL = "https://github.com/parkcheonghun/demo.git"
         GITOPS_REPO_BRANCH = "master" // GitOps Repository의 브랜치
-        GITOPS_DEPLOYMENT_PATH = "helm/templates/deployment.yaml" // GitOps Repo 내의 deployment.yaml 경로
+        HELM_VALUES_PATH = "helm/values.yaml" // GitOps Repo 내의 deployment.yaml이 helm chart 형식이여서 values.yaml로 변경
 
         // Git 자격 증명 (GitOps Repository에 푸시하기 위함)
         GIT_CREDENTIALS_ID = 'github' // Jenkins에 등록된 Git 자격 증명 ID
@@ -94,17 +94,20 @@ pipeline {
 
                         // --- 디버깅 라인 시작 ---
                         echo "--- Before sed ---"
-                        sh "cat ${GITOPS_DEPLOYMENT_PATH}" // 파일 원본 내용 확인
+                        sh "cat ${HELM_VALUES_PATH}" // 파일 원본 내용 확인
                         // --- 디버깅 라인 끝 ---
 
                         // deployment.yaml 파일 업데이트 (예시: sed 사용)
                         // 이 부분은 YAML 구조와 업데이트 방식에 따라 달라질 수 있습니다.
                         // Helm/Kustomize를 사용한다면 해당 툴의 CLI를 사용하거나 values.yaml을 업데이트합니다.
-                        sh "sed -i 's|image: ${DOCKER_IMAGE_NAME}:.*|image: ${DOCKER_IMAGE_NAME}:${NEW_IMAGE_TAG}|g' ${GITOPS_DEPLOYMENT_PATH}"
+                        // sh "sed -i 's|image: ${DOCKER_IMAGE_NAME}:.*|image: ${DOCKER_IMAGE_NAME}:${NEW_IMAGE_TAG}|g' ${GITOPS_DEPLOYMENT_PATH}"
+
+                        // Helm values.yaml 파일에서 이미지 태그 업데이트 ==> tag: 뒤의 태그를 젠킨스 빌드 번호로 동적으로 변경하기 위해 sed 명령어로 변경합니다.
+                        sh "sed -i 's|^\\s*tag: .*| tag: ${NEW_IMAGE_TAG}|g' ${HELM_VALUES_PATH}"
 
                         // --- 디버깅 라인 시작 ---
                         echo "--- After sed ---"
-                        sh "cat ${GITOPS_DEPLOYMENT_PATH}" // sed 적용 후 내용 확인
+                        sh "cat ${HELM_VALUES_PATH}" // sed 적용 후 내용 확인
                         sh "git status" // Git이 변경사항을 인식했는지 확인
                         sh "git diff" // Git이 인식하는 변경사항이 무엇인지 확인
                         // --- 디버깅 라인 끝 ---
