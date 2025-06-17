@@ -94,7 +94,7 @@ pipeline {
 
                         // --- 디버깅 라인 시작 ---
                         echo "--- Before sed ---"
-                        sh "cat ${HELM_VALUES_PATH}" // 파일 원본 내용 확인
+                        //sh "cat ${HELM_VALUES_PATH}" // 파일 원본 내용 확인
                         // --- 디버깅 라인 끝 ---
 
                         // deployment.yaml 파일 업데이트 (예시: sed 사용)
@@ -108,7 +108,7 @@ pipeline {
 
                         // --- 디버깅 라인 시작 ---
                         echo "--- After sed ---"
-                        sh "cat ${HELM_VALUES_PATH}" // sed 적용 후 내용 확인
+                        //sh "cat ${HELM_VALUES_PATH}" // sed 적용 후 내용 확인
                         sh "git status" // Git이 변경사항을 인식했는지 확인
                         sh "git diff" // Git이 인식하는 변경사항이 무엇인지 확인
                         // --- 디버깅 라인 끝 ---
