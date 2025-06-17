@@ -3,7 +3,7 @@ replicaCount: 2
 
 image:
   repository: parkcheonghun/demo-app
-  tag: 17
+  tag: 16
   pullPolicy: IfNotPresent
 
 service:
@@ -50,8 +50,8 @@ ingress:
         - path: /
           pathType: Prefix
         #- path: /actuator/health
-        #- path: /hello
-        #  pathType: Prefix
+        - path: /hello
+          pathType: Prefix
 
 config:
   application-name: demo-app
