@@ -3,7 +3,11 @@ replicaCount: 2
 
 image:
   repository: parkcheonghun/demo-app
+<<<<<<< HEAD
   tag: 16
+=======
+  tag: 18
+>>>>>>> 6f5a6b9fc575d7abd0cf847513ff433e0898d83c
   pullPolicy: IfNotPresent
 
 service:
