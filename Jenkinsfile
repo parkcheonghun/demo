@@ -18,7 +18,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out your project...'
-                git branch: ${GITOPS_REPO_BRANCH}, url: ${GITOPS_REPO_URL} // 여기에 실제 Git 저장소 URL을 입력하세요
+                git branch: 'master', url: 'https://github.com/parkcheonghun/demo.git' // 여기에 실제 Git 저장소 URL을 입력하세요
                 //git 'https://github.com/your-repo/your-project.git' // 여기에 실제 Git 저장소 URL을 입력하세요
             }
         }
