@@ -92,10 +92,22 @@ pipeline {
                         sh "git config user.email 'jenkins@example.com'"
                         sh "git config user.name 'Jenkins CI/CD'"
 
+                        // --- 디버깅 라인 시작 ---
+                        echo "--- Before sed ---"
+                        sh "cat ${GITOPS_DEPLOYMENT_PATH}" // 파일 원본 내용 확인
+                        // --- 디버깅 라인 끝 ---
+
                         // deployment.yaml 파일 업데이트 (예시: sed 사용)
                         // 이 부분은 YAML 구조와 업데이트 방식에 따라 달라질 수 있습니다.
                         // Helm/Kustomize를 사용한다면 해당 툴의 CLI를 사용하거나 values.yaml을 업데이트합니다.
                         sh "sed -i 's|image: ${DOCKER_IMAGE_NAME}:.*|image: ${DOCKER_IMAGE_NAME}:${NEW_IMAGE_TAG}|g' ${GITOPS_DEPLOYMENT_PATH}"
+
+                        // --- 디버깅 라인 시작 ---
+                        echo "--- After sed ---"
+                        sh "cat ${GITOPS_DEPLOYMENT_PATH}" // sed 적용 후 내용 확인
+                        sh "git status" // Git이 변경사항을 인식했는지 확인
+                        sh "git diff" // Git이 인식하는 변경사항이 무엇인지 확인
+                        // --- 디버깅 라인 끝 ---
 
                         sh "git add ."
                         sh "git commit -m 'Update ${DOCKER_IMAGE_NAME} image to ${NEW_IMAGE_TAG} by Jenkins CI #${BUILD_NUMBER}'"
