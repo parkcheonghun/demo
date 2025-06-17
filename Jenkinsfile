@@ -103,7 +103,8 @@ pipeline {
                         // sh "sed -i 's|image: ${DOCKER_IMAGE_NAME}:.*|image: ${DOCKER_IMAGE_NAME}:${NEW_IMAGE_TAG}|g' ${GITOPS_DEPLOYMENT_PATH}"
 
                         // Helm values.yaml 파일에서 이미지 태그 업데이트 ==> tag: 뒤의 태그를 젠킨스 빌드 번호로 동적으로 변경하기 위해 sed 명령어로 변경합니다.
-                        sh "sed -i 's|^\\s*tag: .*| tag: ${NEW_IMAGE_TAG}|g' ${HELM_VALUES_PATH}"
+                        // sh "sed -i 's|^\\s*tag: .*| tag: ${NEW_IMAGE_TAG}|g' ${HELM_VALUES_PATH}" ==> tag 앞에 들여쓰기가 안되서 argocd에서 에러난다.
+                        sh "sed -i '/^\\s*tag:/s/: .*/: ${NEW_IMAGE_TAG}/' ${HELM_VALUES_PATH}"
 
                         // --- 디버깅 라인 시작 ---
                         echo "--- After sed ---"
