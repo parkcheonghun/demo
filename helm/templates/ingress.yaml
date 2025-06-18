@@ -5,8 +5,10 @@ metadata:
   labels:
     app: demo-app
 spec:
+  ingressClassName: nginx
   rules:
-    - http:
+    - host: demo.local
+      http:
         paths:
           - path: /
             pathType: Prefix
