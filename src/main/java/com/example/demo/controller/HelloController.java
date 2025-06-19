@@ -29,4 +29,9 @@ public class HelloController {
     public String newEndpoint() {
         return "This is a new endpoint";
     }
+
+    @GetMapping("/")
+    public String home() {
+        return "Welcome to the home page!";
+    }
 }
