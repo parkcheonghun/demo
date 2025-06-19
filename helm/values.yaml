@@ -3,7 +3,7 @@ replicaCount: 2
 
 image:
   repository: parkcheonghun/demo-app
-  tag: 25
+  tag: 26
   pullPolicy: IfNotPresent
 
 service:
