@@ -7,11 +7,12 @@ metadata:
   labels:
     app: demo-app
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 8081
       targetPort: 8081
       protocol: TCP
       name: http
+      nodePort: 30080
   selector:
     app: demo-app
