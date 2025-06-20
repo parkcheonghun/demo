@@ -22,7 +22,6 @@ resources:
 livenessProbe:
   httpGet:
     path: /actuator/health
-    #path: /hello
     port: 8081
   initialDelaySeconds: 90
   periodSeconds: 15
@@ -32,7 +31,6 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /actuator/health
-    #path: /hello
     port: 8081
   initialDelaySeconds: 45
   periodSeconds: 15
@@ -48,9 +46,6 @@ ingress:
     - host: localhost
       paths:
         - path: /
-          pathType: Prefix
-        #- path: /actuator/health
-        - path: /hello
           pathType: Prefix
 
 config:
